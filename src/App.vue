@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory"/>
+    <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
     <ShowNotes v-for="(item, index) in notes" :note="item" :key="index" :i="index" />
     <AddBlock ref="modal" @sendNotes="getNote"/>
   </div>
@@ -30,6 +30,9 @@ export default {
     filteredByCategory: function (data) {
       this.notes = data;
       console.log(this.notes);
+    },
+    filterByQuery: function (data) {
+      this.notes = data;
     },
     getNote: function () {
       this.notes = JSON.parse(localStorage.getItem('notes'));

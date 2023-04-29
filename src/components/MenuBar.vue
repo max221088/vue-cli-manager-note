@@ -1,7 +1,7 @@
 <template>
   <div class="menu-container">
     <button @click="showModal">Add notes</button>
-    <input type="text" placeholder="Enter search query" id="search">
+    <input type="text" placeholder="Enter search query" id="search" v-model="query" @input="searchOnNotes()">
     <h5>Filter by category</h5>
     <select class="cat-filt" v-model="celectedCategory" @change="filtByCategory()">
       <option selected value="all">All</option>
@@ -18,7 +18,8 @@ export default {
     return {
       notes: [],
       filtNotes: [],
-      celectedCategory: ''
+      celectedCategory: '',
+      query: ''
     }
   },
   computed: {
@@ -40,6 +41,22 @@ export default {
       }
       this.$emit('sendFiltCategoty', this.filtNotes);
       this.filtNotes = [];
+    }, 
+    searchOnNotes () {
+      let filtByQuery = [];
+      this.notes = JSON.parse(localStorage.getItem('notes'));
+      filtByQuery = this.notes.filter(function (el) {
+        if (el.cat.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+					return true;
+				} else {
+					if (el.con.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+      }.bind(this))
+      this.$emit('sendFiltQuery', filtByQuery);
     }
   }
 }
