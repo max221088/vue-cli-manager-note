@@ -1,0 +1,134 @@
+body,
+html,
+input,
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: black;
+  border: none;
+  box-shadow: none;
+}
+#app {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: antiquewhite;
+  width: 100%;
+  height: 500px;
+}
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  height: 40px;
+  width: 100%;
+}
+.menu-container button {
+  margin-right: 20px;
+  padding: 5px;
+}
+.menu-container input {
+  border: 1px solid #404040;
+  width: 200px;
+  border-radius: 3px;
+  padding: 3px;
+}
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+.modal.active {
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+.modal.active .form-container {
+  transform: none;
+  transition: 0.6s;
+}
+.modal .overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal .form-container {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  width: 400px;
+  margin: auto;
+  z-index: 4;
+  background-color: aliceblue;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-50px);
+}
+.modal .form-container h5 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.modal .form-container select {
+  width: 250px;
+  margin-bottom: 30px;
+}
+.modal .form-container textarea {
+  width: 250px;
+  height: 100px;
+}
+.modal .form-container .btn-container {
+  display: flex;
+  width: 250px;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .form-container .btn-container .btn-add {
+  width: 80px;
+}
+.modal .form-container .btn-container .btn-cancel {
+  width: 80px;
+}
+.note {
+  position: absolute;
+  z-index: 5;
+  width: 100px;
+  min-height: 100px;
+}
+.note .category-title {
+  width: 100%;
+  background-color: aqua;
+  color: black;
+  text-transform: capitalize;
+  font-size: 16px;
+}
+.note .note-text {
+  background-color: #f7f742;
+  color: #444;
+  font-size: 14px;
+}

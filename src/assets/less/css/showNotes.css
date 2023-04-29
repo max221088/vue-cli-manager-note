@@ -1,0 +1,20 @@
+.note {
+  position: absolute;
+  z-index: 5;
+  width: 100px;
+  min-height: 100px;
+  background-color: #f7f742;
+  cursor: pointer;
+}
+.note .category-title {
+  width: 100%;
+  background-color: aqua;
+  color: black;
+  text-transform: capitalize;
+  font-size: 16px;
+}
+.note .note-text {
+  color: #444;
+  font-size: 14px;
+  height: 100%;
+}

@@ -1,0 +1,80 @@
+//out: ./css/
+
+.modal{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    
+
+    &.active{
+        visibility: visible;
+        opacity: 1;
+        transition: 0.5s;
+
+        .form-container{
+            transform: none;
+            transition: 0.6s;
+        }
+    }
+
+    .overlay{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        background-color: rgba(0, 0, 0, 0.6);
+
+    }
+    .form-container{
+        position: absolute;
+        top: 50px;
+        left: 0;
+        right: 0;
+        width: 400px;
+        margin: auto;
+        z-index: 4;
+        background-color: aliceblue;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-50px);
+
+        h5{
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        select{
+            width: 250px;
+            margin-bottom: 30px;
+        }
+        textarea{
+            width: 250px;
+            height: 100px;
+        }
+        .btn-container{
+            display: flex;
+            width: 250px;
+            margin-top: 30px;
+            align-items: center;
+            justify-content: space-between;
+            .btn-add{
+                width: 80px;
+                
+            }
+            .btn-cancel{
+                width: 80px;
+            }
+        }
+        
+    }
+
+}
