@@ -38,6 +38,7 @@ export default {
       this.con = '';
     },
     addNotes () {
+      this.notes = JSON.parse(localStorage.getItem('notes'));
         this.notes.push({
             cat: this.cat,
             con: this.con,
