@@ -6,7 +6,14 @@
   background-color: #81ecec;
   border: 2px solid #2d3436;
   border-radius: 5px;
+  user-select: none;
   cursor: pointer;
+}
+.note .title-note {
+  background-color: #a29bfe;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
 }
 .note .category-title {
   width: 100%;
@@ -16,6 +23,36 @@
   text-transform: capitalize;
   font-size: 16px;
   user-select: none;
+}
+.note .btn-block {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 20px;
+  right: 0;
+  display: flex;
+}
+.note .btn-block .btn-edit {
+  background-image: url(../icon/edit_icon.svg);
+  background-position: center;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+.note .btn-block .btn-edit:hover {
+  opacity: 1;
+}
+.note .btn-block .btn-del {
+  background-image: url(../icon/delete_icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+.note .btn-block .btn-del:hover {
+  opacity: 1;
 }
 .note .note-text {
   padding: 5px;

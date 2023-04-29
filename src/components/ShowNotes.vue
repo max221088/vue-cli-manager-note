@@ -1,8 +1,13 @@
 <template>
     <div class="note" v-bind:style="{ top: note.y + 'px', left: note.x + 'px'}" :data-key=i 
     @mousedown="startMove()" @mouseup="finishMove()" @mousemove="move()">
-        <h5 class="category-title">{{ note.cat }}</h5>
-        <p class="note-text">{{ note.con }}</p>
+      <h5 class="title-note">{{ note.tit }}</h5>
+      <h5 class="category-title">{{ note.cat }}</h5>
+      <div class="btn-block">
+        <div class="btn-edit"></div>
+        <div class="btn-del" @click="delNotes()"></div>
+      </div>
+      <p class="note-text">{{ note.con }}</p>
     </div>
 </template>
 
@@ -64,7 +69,15 @@ export default {
         this.distance.x = 0;
         } 
         this.show();
-      } 
+      }
+    },
+    delNotes () {
+      let index = this.$el.getAttribute('data-key');
+      this.notes = JSON.parse(localStorage.getItem('notes'));
+      let delNote = this.notes.splice(index, 1);
+      this.$emit('moveNote', this.notes);
+      localStorage.setItem('notes', JSON.stringify(this.notes))
+      this.$emit('message', delNote[0].tit);
     }
   }
 }

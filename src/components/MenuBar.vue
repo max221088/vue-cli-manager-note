@@ -52,7 +52,11 @@ export default {
 					if (el.con.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
 						return true;
 					} else {
-						return false;
+            if (el.tit.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+              return true
+            } else {
+              return false;
+            }
 					}
 				}
       }.bind(this))

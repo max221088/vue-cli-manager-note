@@ -8,8 +8,15 @@
     background-color: #81ecec;
     border: 2px solid #2d3436;
     border-radius: 5px;
+    user-select: none;
     cursor: pointer;
-
+    
+    .title-note{
+        background-color: #a29bfe;
+        width: 100%;
+        padding: 5px;
+        text-align: center;
+    }
     .category-title{
         width: 100%;
         padding: 5px;
@@ -19,7 +26,40 @@
         font-size: 16px;
         user-select: none;
     }
+    .btn-block{
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.2);
+        width: 40px;
+        height: 20px;
+        right: 0;
+        display: flex;
 
+        .btn-edit{
+            background-image: url(../icon/edit_icon.svg);
+            background-position: center;
+            background-size: cover;
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+        .btn-del{
+            background-image: url(../icon/delete_icon.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+    }
     .note-text{
         padding: 5px;
         color: #444;
