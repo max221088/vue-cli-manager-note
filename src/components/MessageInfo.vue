@@ -1,13 +1,13 @@
 <template>
     <div class="message" v-bind:class="{'active': isMessageShow}">
-        <p>Note <span>{{ name }}</span> has been deleted !!!</p>
+        <p>Note <span>{{ name }}</span> has been <span>{{ content }}</span> !!!</p>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'MessageDelElement',
-  props: ['name'],
+  name: 'MessageInfo',
+  props: ['name', 'content'],
   data: function () {
     return {
         isMessageShow: false,

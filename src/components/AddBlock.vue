@@ -55,6 +55,7 @@ export default {
         });
        localStorage.setItem('notes', JSON.stringify(this.notes));
        this.$emit('sendNotes');
+       this.$emit('message', this.tit);
         this.closeModal();
     }
   },

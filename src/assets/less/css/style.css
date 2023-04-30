@@ -97,11 +97,18 @@ body {
   margin: auto;
   z-index: 4;
   background-color: aliceblue;
-  padding: 50px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transform: translateY(-50px);
+}
+.modal .form-container h4 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #000;
+  text-decoration: underline;
 }
 .modal .form-container h5 {
   color: #333;
@@ -228,4 +235,87 @@ body {
   font-weight: bold;
   color: red;
   margin: 5px;
+}
+.edit-modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 7;
+}
+.edit-modal.active {
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+.edit-modal.active .form-container {
+  transform: none;
+  transition: 0.6s;
+}
+.edit-modal .overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.edit-modal .edit-note {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  width: 400px;
+  margin: auto;
+  z-index: 4;
+  background-color: #fab1a0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-50px);
+}
+.edit-modal .edit-note h4 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #000;
+  text-decoration: underline;
+}
+.edit-modal .edit-note h5 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.edit-modal .edit-note select {
+  width: 250px;
+  margin-bottom: 30px;
+}
+.edit-modal .edit-note .title-note {
+  width: 250px;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 16px;
+  border: 1px solid #444;
+}
+.edit-modal .edit-note textarea {
+  width: 250px;
+  height: 100px;
+}
+.edit-modal .edit-note .btn-container {
+  display: flex;
+  width: 250px;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-modal .edit-note .btn-container .btn-save {
+  width: 80px;
+}
+.edit-modal .edit-note .btn-container .btn-cancel {
+  width: 80px;
 }
