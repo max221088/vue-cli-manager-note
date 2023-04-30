@@ -2,8 +2,10 @@
   <div id="app">
     <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
     <ShowNotes v-for="(item, index) in notes" :note="item" :key="index" :i="index" 
-    @moveNote="move" @message="showMessage"/>
-    <AddBlock ref="modal" @sendNotes="getNote" :name="delElement"/>
+    @moveNote="move" @message="showMessage"
+    @sendIndex="startEditNote"/>
+    <AddBlock ref="modal" @sendNotes="getNote"/>
+    <EditNote ref="edit" @sendNotes="getNote"/>
     <MessageDelElement ref="message" :name="delElement"/>
   </div>
 </template>
@@ -13,6 +15,7 @@ import MenuBar from './components/MenuBar.vue'
 import AddBlock from './components/AddBlock.vue'
 import ShowNotes from './components/ShowNotes.vue'
 import MessageDelElement from './components/MessageDelElement.vue'
+import EditNote from './components/EditNote.vue'
 
 
 export default {
@@ -21,17 +24,22 @@ export default {
     MenuBar,
     AddBlock,
     ShowNotes,
-    MessageDelElement
+    MessageDelElement,
+    EditNote
   },
   data: function () {
     return {
       notes: [],
-      delElement: ''
+      delElement: '',
     }
   },
   methods: {
     showModal () {
       this.$refs.modal.openModal();
+    },
+    startEditNote (data) {
+      this.editIndex = data;
+      this.$refs.edit.openModal();
     },
     showMessage (data) {
       this.delElement = data;

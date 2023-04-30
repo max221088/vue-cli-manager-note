@@ -1,6 +1,6 @@
 //out: ./css/
 
-.modal{
+.edit-modal{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -8,7 +8,7 @@
     right: 0;
     visibility: hidden;
     opacity: 0;
-    z-index: 6;
+    z-index: 7;
 
     &.active{
         visibility: visible;
@@ -31,7 +31,7 @@
         background-color: rgba(0, 0, 0, 0.6);
 
     }
-    .form-container{
+    .edit-note{
         position: absolute;
         top: 50px;
         left: 0;
@@ -39,7 +39,7 @@
         width: 400px;
         margin: auto;
         z-index: 4;
-        background-color: aliceblue;
+        background-color: #fab1a0;
         padding: 40px;
         display: flex;
         flex-direction: column;
@@ -53,6 +53,7 @@
             color: #000;
             text-decoration: underline;
         }
+
         h5{
             color: #333;
             font-size: 16px;
@@ -80,7 +81,7 @@
             margin-top: 30px;
             align-items: center;
             justify-content: space-between;
-            .btn-add{
+            .btn-save{
                 width: 80px;
                 
             }
@@ -90,5 +91,4 @@
         }
         
     }
-
 }

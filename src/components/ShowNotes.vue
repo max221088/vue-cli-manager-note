@@ -4,7 +4,7 @@
       <h5 class="title-note">{{ note.tit }}</h5>
       <h5 class="category-title">{{ note.cat }}</h5>
       <div class="btn-block">
-        <div class="btn-edit"></div>
+        <div class="btn-edit" @click="editNotes ()"></div>
         <div class="btn-del" @click="delNotes()"></div>
       </div>
       <p class="note-text">{{ note.con }}</p>
@@ -78,6 +78,11 @@ export default {
       this.$emit('moveNote', this.notes);
       localStorage.setItem('notes', JSON.stringify(this.notes))
       this.$emit('message', delNote[0].tit);
+    },
+    editNotes () {
+      let index = this.$el.getAttribute('data-key');
+      localStorage.setItem('index', index);
+      this.$emit('sendIndex');
     }
   }
 }

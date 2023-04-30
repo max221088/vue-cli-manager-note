@@ -2,6 +2,7 @@
     <div class="modal" v-bind:class="{'active': modalIsOpen}">
         <div class="overlay" @click="closeModal()"></div>
         <div class="form-container">
+          <h4>New Note</h4>
           <h5>Title Note</h5>
           <input type="text" class="title-note" placeholder="Enter title" v-model="tit">
           <h5>Celect Category</h5>
