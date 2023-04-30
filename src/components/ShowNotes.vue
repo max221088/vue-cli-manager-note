@@ -12,7 +12,7 @@
 </template>
 
 <script>
-export default {
+  export default {
     name: 'ShowNotes',
     props: ['note', 'i'],
     data: function () {
@@ -45,45 +45,45 @@ export default {
           y: this.notes[this.index].y
         })
         this.action = true;
-    },
-    finishMove () {
-      this.action = false;
-      localStorage.setItem('notes', JSON.stringify(this.notes))
-    },
-    move () {
-      if (this.action) {
-        this.distance = ({
-          x: (this.saveCoords.x + event.pageX - this.startCoords.x),
-          y: (this.saveCoords.y + event.pageY - this.startCoords.y)
-        });
-        if (this.distance.x > this.areaWidth - this.$el.clientWidth) {
-				this.distance.x = this.areaWidth - this.$el.clientWidth;
-        } 
-        if (this.distance.y > this.areaHeight - this.$el.clientHeight) {
-        this.distance.y = this.areaHeight - this.$el.clientHeight;
-        } 
-        if (this.distance.y < 40) {
-				this.distance.y = 40;
+      },
+      finishMove () {
+        this.action = false;
+        localStorage.setItem('notes', JSON.stringify(this.notes))
+      },
+      move () {
+        if (this.action) {
+          this.distance = ({
+            x: (this.saveCoords.x + event.pageX - this.startCoords.x),
+            y: (this.saveCoords.y + event.pageY - this.startCoords.y)
+          });
+          if (this.distance.x > this.areaWidth - this.$el.clientWidth) {
+            this.distance.x = this.areaWidth - this.$el.clientWidth;
+          } 
+          if (this.distance.y > this.areaHeight - this.$el.clientHeight) {
+            this.distance.y = this.areaHeight - this.$el.clientHeight;
+          } 
+          if (this.distance.y < 40) {
+            this.distance.y = 40;
+          }
+          if (this.distance.x < 0) {
+            this.distance.x = 0;
+          } 
+          this.show();
         }
-        if (this.distance.x < 0) {
-        this.distance.x = 0;
-        } 
-        this.show();
+      },
+      delNotes () {
+        let index = this.$el.getAttribute('data-key');
+        this.notes = JSON.parse(localStorage.getItem('notes'));
+        let delNote = this.notes.splice(index, 1);
+        this.$emit('moveNote', this.notes);
+        localStorage.setItem('notes', JSON.stringify(this.notes))
+        this.$emit('message', delNote[0].tit);
+      },
+      editNotes () {
+        let index = this.$el.getAttribute('data-key');
+        localStorage.setItem('index', index);
+        this.$emit('sendIndex');
       }
-    },
-    delNotes () {
-      let index = this.$el.getAttribute('data-key');
-      this.notes = JSON.parse(localStorage.getItem('notes'));
-      let delNote = this.notes.splice(index, 1);
-      this.$emit('moveNote', this.notes);
-      localStorage.setItem('notes', JSON.stringify(this.notes))
-      this.$emit('message', delNote[0].tit);
-    },
-    editNotes () {
-      let index = this.$el.getAttribute('data-key');
-      localStorage.setItem('index', index);
-      this.$emit('sendIndex');
-    }
+    } 
   }
-}
 </script>

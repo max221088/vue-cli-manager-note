@@ -12,75 +12,72 @@
 </template>
 
 <script>
-import MenuBar from './components/MenuBar.vue'
-import AddBlock from './components/AddBlock.vue'
-import ShowNotes from './components/ShowNotes.vue'
-import MessageInfo from './components/MessageInfo.vue'
-import EditNote from './components/EditNote.vue'
+  import MenuBar from './components/MenuBar.vue'
+  import AddBlock from './components/AddBlock.vue'
+  import ShowNotes from './components/ShowNotes.vue'
+  import MessageInfo from './components/MessageInfo.vue'
+  import EditNote from './components/EditNote.vue'
 
 
-export default {
-  name: 'App',
-  components: {
-    MenuBar,
-    AddBlock,
-    ShowNotes,
-    MessageInfo,
-    EditNote
-  },
-  data: function () {
-    return {
-      notes: [],
-      Element: '',
-      added: 'Added',
-      remove: 'Removed'
-    }
-  },
-  methods: {
-    showModal () {
-      this.$refs.modal.openModal();
+  export default {
+    name: 'App',
+    components: {
+      MenuBar,
+      AddBlock,
+      ShowNotes,
+      MessageInfo,
+      EditNote
     },
-    startEditNote (data) {
-      this.editIndex = data;
-      this.$refs.edit.openModal();
+    data: function () {
+      return {
+        notes: [],
+        Element: '',
+        added: 'Added',
+        remove: 'Removed'
+      }
     },
-    showMessageDel (data) {
-      this.Element = data;
-      this.$refs.messageDel.sendMessage();
+    methods: {
+      showModal () {
+        this.$refs.modal.openModal();
+      },
+      startEditNote (data) {
+        this.editIndex = data;
+        this.$refs.edit.openModal();
+      },
+      showMessageDel (data) {
+        this.Element = data;
+        this.$refs.messageDel.sendMessage();
+      },
+      showMessageAdd (data) {
+        this.Element = data;
+        this.$refs.messageAdd.sendMessage();
+      },
+      filteredByCategory: function (data) {
+        this.notes = data;
+      },
+      filterByQuery: function (data) {
+        this.notes = data;
+      },
+      getNote: function () {
+        this.notes = JSON.parse(localStorage.getItem('notes'));
+      },
+      move: function (data) {
+        this.notes = data;
+      }
     },
-    showMessageAdd (data) {
-      this.Element = data;
-      this.$refs.messageAdd.sendMessage();
+    computed: {
+      getNotesFromLS () {
+              return this.$store.getters['getNotesFromLS'];
+          },
     },
-    filteredByCategory: function (data) {
-      this.notes = data;
-    },
-    filterByQuery: function (data) {
-      this.notes = data;
-    },
-    getNote: function () {
-      this.notes = JSON.parse(localStorage.getItem('notes'));
-    },
-    move: function (data) {
-      this.notes = data;
-    }
-  },
-  computed: {
-    getNotesFromLS () {
-            return this.$store.getters['getNotesFromLS'];
-        },
-  },
-  created() {
-    this.$store.dispatch('getFromLS');
-    this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
-       ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
-    
-    
+    created() {
+      this.$store.dispatch('getFromLS');
+      this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
+        ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
+    } 
   }
-  
-}
 </script>
 
 <style lang="less">
-@import './assets/less/style.less';
+  @import './assets/less/style.less';
 </style>

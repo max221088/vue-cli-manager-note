@@ -20,32 +20,32 @@
 </template>
 
 <script>
-export default {
-  name: 'AddBlock',
-  props: [],
-  data: function() {
-    return {
-      modalIsOpen: false,
-      tit: '',
-      cat: '',
-      con: '',
-      notes: [],
-    }
-  },
-  methods: {
-    openModal () {
-      this.modalIsOpen = true;
-    },
-    closeModal () {
-      this.modalIsOpen = false;
-      this.tit = '';
-      this.cat = '';
-      this.con = '';
-    },
-    addNotes () {
-      if (localStorage.getItem('notes')) {
-        this.notes = JSON.parse(localStorage.getItem('notes'));
+  export default {
+    name: 'AddBlock',
+    props: [],
+    data: function() {
+      return {
+        modalIsOpen: false,
+        tit: '',
+        cat: '',
+        con: '',
+        notes: [],
       }
+    },
+    methods: {
+      openModal () {
+        this.modalIsOpen = true;
+      },
+      closeModal () {
+        this.modalIsOpen = false;
+        this.tit = '';
+        this.cat = '';
+        this.con = '';
+      },
+      addNotes () {
+        if (localStorage.getItem('notes')) {
+          this.notes = JSON.parse(localStorage.getItem('notes'));
+        }
         this.notes.push({
           tit: this.tit,
           cat: this.cat,
@@ -53,17 +53,16 @@ export default {
           x: 0,
           y: 50
         });
-       localStorage.setItem('notes', JSON.stringify(this.notes));
-       this.$emit('sendNotes');
-       this.$emit('message', this.tit);
+        localStorage.setItem('notes', JSON.stringify(this.notes));
+        this.$emit('sendNotes');
+        this.$emit('message', this.tit);
         this.closeModal();
+      }
+    },
+    computed: {
+      categories () {
+        return this.$store.getters['getCategories'];
+      },
     }
-  },
-  computed: {
-        categories () {
-            return this.$store.getters['getCategories'];
-        },
-    
-    }
-}
+  }
 </script>

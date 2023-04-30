@@ -5,22 +5,22 @@
 </template>
 
 <script>
-export default {
-  name: 'MessageInfo',
-  props: ['name', 'content'],
-  data: function () {
-    return {
+  export default {
+    name: 'MessageInfo',
+    props: ['name', 'content'],
+    data: function () {
+      return {
         isMessageShow: false,
-    }
-  },
-  methods: {
-    closeMessage () {
-        this.isMessageShow = false;
+      }
     },
-    sendMessage () {
+    methods: {
+      closeMessage () {
+        this.isMessageShow = false;
+      },
+      sendMessage () {
         this.isMessageShow = true;
         setTimeout(this.closeMessage, 3000);
+      }
     }
   }
-}
 </script>

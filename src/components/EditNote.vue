@@ -20,51 +20,50 @@
 </template>
 
 <script>
-export default {
-  name: 'EditNote',
-  props: [],
-  data: function() {
-    return {
-      editIsOpen: false,
-      tit: '',
-      cat: '',
-      con: '',
-      notes: [],
-      index: ''
-    }
-  },
-  methods: {
-    openModal () {
-      this.editIsOpen = true;
-      this.notes = JSON.parse(localStorage.getItem('notes'));
-      this.index = localStorage.getItem('index');
-      this.tit = this.notes[this.index].tit;
-      this.con = this.notes[this.index].con;
-      this.cat = this.notes[this.index].cat;
-    },
-    closeModal () {
-      this.editIsOpen = false;
-      this.tit = '';
-      this.cat = '';
-      this.con = '';
-    },
-    saveNotes () {
-      if (localStorage.getItem('notes')) {
-        this.notes = JSON.parse(localStorage.getItem('notes'));
+  export default {
+    name: 'EditNote',
+    props: [],
+    data: function() {
+      return {
+        editIsOpen: false,
+        tit: '',
+        cat: '',
+        con: '',
+        notes: [],
+        index: ''
       }
+    },
+    methods: {
+      openModal () {
+        this.editIsOpen = true;
+        this.notes = JSON.parse(localStorage.getItem('notes'));
+        this.index = localStorage.getItem('index');
+        this.tit = this.notes[this.index].tit;
+        this.con = this.notes[this.index].con;
+        this.cat = this.notes[this.index].cat;
+      },
+      closeModal () {
+        this.editIsOpen = false;
+        this.tit = '';
+        this.cat = '';
+        this.con = '';
+      },
+      saveNotes () {
+        if (localStorage.getItem('notes')) {
+          this.notes = JSON.parse(localStorage.getItem('notes'));
+        }
         this.notes[this.index].tit = this.tit;
         this.notes[this.index].con = this.con;
         this.notes[this.index].cat = this.cat;
         localStorage.setItem('notes', JSON.stringify(this.notes));
         this.$emit('sendNotes');
         this.closeModal();
-    }
-  },
-  computed: {
-        categories () {
-            return this.$store.getters['getCategories'];
+      }
+    },
+    computed: {
+      categories () {
+        return this.$store.getters['getCategories'];
         },
-    
     }
-}
+  }
 </script>
