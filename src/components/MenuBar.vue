@@ -4,7 +4,7 @@
     <input type="text" placeholder="Enter search query" id="search" v-model="query" @input="searchOnNotes()">
     <h5>Filter by category</h5>
     <select class="cat-filt" v-model="celectedCategory" @change="filtByCategory()">
-      <option selected value="all">All</option>
+      <option value="all">All</option>
       <option v-for="(items, index) in categories" :key="index">{{ items }}</option>
      </select>
   </div>
@@ -18,7 +18,7 @@
       return {
         notes: [],
         filtNotes: [],
-        celectedCategory: '',
+        celectedCategory: 'all',
         query: ''
       }
     },

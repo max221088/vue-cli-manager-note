@@ -1,4 +1,4 @@
-.note {
+.wropp .note {
   position: absolute;
   z-index: 5;
   width: 150px;
@@ -9,13 +9,13 @@
   user-select: none;
   cursor: pointer;
 }
-.note .title-note {
+.wropp .note .title-note {
   background-color: #a29bfe;
   width: 100%;
   padding: 5px;
   text-align: center;
 }
-.note .category-title {
+.wropp .note .category-title {
   width: 100%;
   padding: 5px;
   background-color: #55efc4;
@@ -24,7 +24,7 @@
   font-size: 16px;
   user-select: none;
 }
-.note .btn-block {
+.wropp .note .btn-block {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.2);
   width: 40px;
@@ -32,7 +32,7 @@
   right: 0;
   display: flex;
 }
-.note .btn-block .btn-edit {
+.wropp .note .btn-block .btn-edit {
   background-image: url(../icon/edit_icon.svg);
   background-position: center;
   background-size: cover;
@@ -40,10 +40,10 @@
   height: 20px;
   opacity: 0.5;
 }
-.note .btn-block .btn-edit:hover {
+.wropp .note .btn-block .btn-edit:hover {
   opacity: 1;
 }
-.note .btn-block .btn-del {
+.wropp .note .btn-block .btn-del {
   background-image: url(../icon/delete_icon.svg);
   background-position: center;
   background-repeat: no-repeat;
@@ -51,13 +51,21 @@
   height: 20px;
   opacity: 0.5;
 }
-.note .btn-block .btn-del:hover {
+.wropp .note .btn-block .btn-del:hover {
   opacity: 1;
 }
-.note .note-text {
+.wropp .note .note-text {
   padding: 5px;
   color: #444;
   font-size: 14px;
   height: 100%;
   user-select: none;
+}
+.wropp .list-enter {
+  transition: 1s;
+  transform: rotateY('45');
+}
+.wropp .list-enter-active {
+  transition: 1s;
+  transform: rotateY('45');
 }

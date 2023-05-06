@@ -1,4 +1,5 @@
 <template>
+  <!-- <div class="wropp"> -->
     <div class="note" v-bind:style="{ top: note.y + 'px', left: note.x + 'px'}" :data-key=i 
     @mousedown="startMove()" @mouseup="finishMove()" @mousemove="move()">
       <h5 class="title-note">{{ note.tit }}</h5>
@@ -9,6 +10,7 @@
       </div>
       <p class="note-text">{{ note.con }}</p>
     </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -35,6 +37,7 @@
       },
       startMove () {
         this.index = this.$el.getAttribute('data-key');
+        //console.log(this.index);
         this.notes = JSON.parse(localStorage.getItem('notes'));
         this.startCoords = ({
           x: event.pageX,

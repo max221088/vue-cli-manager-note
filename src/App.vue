@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
-    <ShowNotes v-for="(item, index) in notes" :note="item" :key="index" :i="index" 
-    @moveNote="move" @message="showMessageDel"
-    @sendIndex="startEditNote"/>
+    <!-- <transition-group tag="div" name="list"> -->
+    <div class="wropp">
+      <ShowNotes v-for="(item, index) in notes" :note="item" :key="index" :i="index" 
+      @moveNote="move" @message="showMessageDel"
+      @sendIndex="startEditNote"/>
+    </div>
+  <!-- </transition-group> -->
     <AddBlock ref="modal" @sendNotes="getNote" @message="showMessageAdd"/>
     <EditNote ref="edit" @sendNotes="getNote"/>
     <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
