@@ -3,7 +3,8 @@
     <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
     <!-- <transition-group tag="div" name="list"> -->
     <div class="wropp">
-      <ShowNotes v-for="(item, index) in notes" :note="item" :key="index" :i="index" 
+      <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index" 
+      :i="index" :data-id="item.id" 
       @moveNote="move" @message="showMessageDel"
       @sendIndex="startEditNote"/>
     </div>
@@ -63,21 +64,26 @@
         this.notes = data;
       },
       getNote: function () {
-        this.notes = JSON.parse(localStorage.getItem('notes'));
+        // this.notes = JSON.parse(localStorage.getItem('notes'));
+        this.notes = this.getNotesFromDB ();
       },
       move: function (data) {
         this.notes = data;
       }
     },
     computed: {
-      getNotesFromLS () {
-              return this.$store.getters['getNotesFromLS'];
-          },
+      // getNotesFromLS () {
+      //         return this.$store.getters['getNotesFromLS'];
+      //     },
+      getNotesFromDB () {
+          return this.$store.getters['getNotesFromDB'];
+      },
     },
     created() {
-      this.$store.dispatch('getFromLS');
-      this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
-        ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
+      //this.$store.dispatch('getFromLS');
+      this.$store.dispatch('fetchNote');
+      // this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
+      //   ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
     } 
   }
 </script>

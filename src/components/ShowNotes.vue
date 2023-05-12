@@ -2,13 +2,13 @@
   <!-- <div class="wropp"> -->
     <div class="note" v-bind:style="{ top: note.y + 'px', left: note.x + 'px'}" :data-key=i 
     @mousedown="startMove()" @mouseup="finishMove()" @mousemove="move()">
-      <h5 class="title-note">{{ note.tit }}</h5>
-      <h5 class="category-title">{{ note.cat }}</h5>
+      <h5 class="title-note">{{ note.title }}</h5>
+      <h5 class="category-title">{{ note.category }}</h5>
       <div class="btn-block">
         <div class="btn-edit" @click="editNotes ()"></div>
         <div class="btn-del" @click="delNotes()"></div>
       </div>
-      <p class="note-text">{{ note.con }}</p>
+      <p class="note-text">{{ note.content }}</p>
     </div>
   <!-- </div> -->
 </template>

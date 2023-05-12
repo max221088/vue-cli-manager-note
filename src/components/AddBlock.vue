@@ -4,13 +4,13 @@
         <div class="form-container">
           <h4>New Note</h4>
           <h5>Title Note</h5>
-          <input type="text" class="title-note" placeholder="Enter title" v-model="tit">
+          <input type="text" class="title-note" placeholder="Enter title" v-model="note.title">
           <h5>Celect Category</h5>
-          <select name="category" id="category" v-model="cat">
+          <select name="category" id="category" v-model="note.category">
             <option v-for="(items, index) in categories" :key="index">{{ items }}</option>
           </select>
           <h5>Content</h5>
-          <textarea name="contain" id="contain" cols="30" rows="10" v-model="con"></textarea>
+          <textarea name="contain" id="contain" cols="30" rows="10" v-model="note.content"></textarea>
           <div class="btn-container">
               <button class="btn-add" @click="addNotes()">ADD</button>
               <button class="btn-cancel" @click="closeModal()">CANCEL</button>
@@ -26,10 +26,14 @@
     data: function() {
       return {
         modalIsOpen: false,
-        tit: '',
-        cat: '',
-        con: '',
-        notes: [],
+        note: {
+          category: '',
+          content: '',
+          id: '',
+          title: '',
+          x: 0,
+          y: 50
+        }
       }
     },
     methods: {
@@ -38,24 +42,15 @@
       },
       closeModal () {
         this.modalIsOpen = false;
-        this.tit = '';
-        this.cat = '';
-        this.con = '';
+        this.note.category = '';
+        this.note.content = '';
+        this.note.title = '';
       },
       addNotes () {
-        if (localStorage.getItem('notes')) {
-          this.notes = JSON.parse(localStorage.getItem('notes'));
-        }
-        this.notes.push({
-          tit: this.tit,
-          cat: this.cat,
-          con: this.con,
-          x: 0,
-          y: 50
-        });
-        localStorage.setItem('notes', JSON.stringify(this.notes));
+        this.note.id = Date.now().toString();
+        this.$store.dispatch('addNoteToDB', this.note);
         this.$emit('sendNotes');
-        this.$emit('message', this.tit);
+        this.$emit('message', this.note.title);
         this.closeModal();
       }
     },
