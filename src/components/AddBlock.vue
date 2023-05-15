@@ -49,7 +49,6 @@
       addNotes () {
         this.note.id = Date.now().toString();
         this.$store.dispatch('addNoteToDB', this.note);
-        this.$emit('sendNotes');
         this.$emit('message', this.note.title);
         this.closeModal();
       }

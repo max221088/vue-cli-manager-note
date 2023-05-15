@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
-    <!-- <transition-group tag="div" name="list"> -->
     <div class="wropp">
-      <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index" 
+      <!-- <transition-group tag="div" name="list"> -->
+      <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index.id" 
       :i="index" :data-id="item.id" 
       @moveNote="move" @message="showMessageDel"
       @sendIndex="startEditNote"/>
+      <!-- </transition-group> -->
     </div>
-  <!-- </transition-group> -->
-    <AddBlock ref="modal" @sendNotes="getNote" @message="showMessageAdd"/>
-    <EditNote ref="edit" @sendNotes="getNote"/>
+    <AddBlock ref="modal" @message="showMessageAdd"/>
+    <EditNote ref="edit" />
     <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
     <MessageInfo ref="messageAdd" :name="Element" :content="added"/>
   </div>
@@ -46,8 +46,7 @@
         this.$refs.modal.openModal();
       },
       startEditNote (data) {
-        this.editIndex = data;
-        this.$refs.edit.openModal();
+        this.$refs.edit.openModal(data);
       },
       showMessageDel (data) {
         this.Element = data;
@@ -62,10 +61,6 @@
       },
       filterByQuery: function (data) {
         this.notes = data;
-      },
-      getNote: function () {
-        // this.notes = JSON.parse(localStorage.getItem('notes'));
-        this.notes = this.getNotesFromDB ();
       },
       move: function (data) {
         this.notes = data;

@@ -29,18 +29,17 @@
         tit: '',
         cat: '',
         con: '',
-        notes: [],
-        index: ''
+        note: [],
       }
     },
     methods: {
-      openModal () {
-        this.editIsOpen = true;
-        this.notes = JSON.parse(localStorage.getItem('notes'));
-        this.index = localStorage.getItem('index');
-        this.tit = this.notes[this.index].tit;
-        this.con = this.notes[this.index].con;
-        this.cat = this.notes[this.index].cat;
+      openModal (data) {
+        let index = data;
+         this.editIsOpen = true;
+         this.note = this.editNote[index];
+         this.tit = this.note.title;
+         this.con = this.note.content;
+         this.cat = this.note.category;
       },
       closeModal () {
         this.editIsOpen = false;
@@ -49,14 +48,10 @@
         this.con = '';
       },
       saveNotes () {
-        if (localStorage.getItem('notes')) {
-          this.notes = JSON.parse(localStorage.getItem('notes'));
-        }
-        this.notes[this.index].tit = this.tit;
-        this.notes[this.index].con = this.con;
-        this.notes[this.index].cat = this.cat;
-        localStorage.setItem('notes', JSON.stringify(this.notes));
-        this.$emit('sendNotes');
+        this.note.title = this.tit;
+        this.note.content = this.con;
+        this.note.category = this.cat;
+        this.$store.dispatch('addNoteToDB', this.note);
         this.closeModal();
       }
     },
@@ -64,6 +59,9 @@
       categories () {
         return this.$store.getters['getCategories'];
         },
+      editNote () {
+        return this.$store.getters['getNotesFromDB'];
+      }
     }
   }
 </script>

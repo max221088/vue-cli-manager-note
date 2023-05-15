@@ -7,8 +7,7 @@ Vue.use(Vuex)
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {  getDocs, collection, doc, setDoc, getFirestore} from "firebase/firestore";
-// doc,getDoc,
+import {  getDocs, collection, doc, setDoc, getDoc, getFirestore, deleteDoc} from "firebase/firestore";
 // Your web app's Firebase configuration
 const app = initializeApp({
   apiKey: "AIzaSyDEnAdzKeJezq6X1l4jqrzANqkVLFBvlNc",
@@ -22,9 +21,9 @@ const app = initializeApp({
 // Initialize Firebase
 const DB = getFirestore(app);
 
-// function getDocFromDB (products, colID) {
-//   return getDoc(doc(DB, products, colID));
-// }
+function getDocFromDB (deskID, colID) {
+  return getDoc(doc(DB, deskID, colID));
+}
 
 function getNotesFromDB (colID) {
   return getDocs(collection(DB, colID))
@@ -40,15 +39,16 @@ export default new Vuex.Store({
       4: 'hobby',
       5: 'frends'
     },
-    notes: [],
-    notesDB: []
+    //notes: [],
+    notesDB: [],
+    EditNote: []
   },
   getters: {
     getCategories (state) {
       return state.categories;
     },
-    getNotesFromLS (state) {
-      return state.notes;
+    getEditNote (state) {
+      return state.EditNote;
     },
     getNotesFromDB (state) {
       return state.notesDB;
@@ -57,23 +57,31 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-   getFromLS (state) {
-    state.notes = JSON.parse(localStorage.getItem('notes'));
-   },
    fetchNote(context) {
     getNotesFromDB('work-desk')
       .then(data => {
         context.state.notesDB = [];
         data.forEach(list => {
-          console.log(list)
+          //console.log(list)
           context.state.notesDB.push(list.data());
       });
-      console.log(context.state.notesDB);
+      //console.log(context.state.notesDB);
     })
   },
   addNoteToDB (context, note) {
     return setDoc(doc(DB, 'work-desk', note.id), note);
-  }
+  },
+  deleteNoteInDB (context, ID) {   // <-- новый метод
+    return deleteDoc(doc(DB, "work-desk", ID))
+  },
+  fetchNoteById (context, ID) {
+    return getDocFromDB ('work-desk', ID)
+    .then(data => {
+      context.state.EditNote = data.data();
+      console.log(context.state.EditNote)
+      
+      })
+    }
   },
   modules: {
   }
