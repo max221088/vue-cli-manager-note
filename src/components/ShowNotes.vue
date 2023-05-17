@@ -31,7 +31,6 @@
       show () {
         this.notes[this.index].x = this.distance.x;
         this.notes[this.index].y = this.distance.y;
-        this.$emit('moveNote', this.notes);
       },
       startMove () {
         this.index = this.$el.getAttribute('data-key');

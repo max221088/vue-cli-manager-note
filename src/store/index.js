@@ -39,8 +39,8 @@ export default new Vuex.Store({
       4: 'hobby',
       5: 'frends'
     },
-    //notes: [],
     notesDB: [],
+    notesFromSearch: [],
     EditNote: []
   },
   getters: {
@@ -53,8 +53,14 @@ export default new Vuex.Store({
     getNotesFromDB (state) {
       return state.notesDB;
     },
+    getNotesFromSearch (state) {
+      return state.notesFromSearch;
+    },
   },
   mutations: {
+    filteredNotes (state, filtNote) {
+      state.notesDB = filtNote;
+    }
   },
   actions: {
    fetchNote(context) {
@@ -72,13 +78,22 @@ export default new Vuex.Store({
   deleteNoteInDB (context, ID) {  
     return deleteDoc(doc(DB, "work-desk", ID))
   },
-  fetchNoteById (context, ID) {
+  fetchNoteFromID (context, ID) {
     return getDocFromDB ('work-desk', ID)
     .then(data => {
       context.state.EditNote = data.data();
       
       })
-    }
+    },
+    fetchNoteFromSearch(context) {
+      getNotesFromDB('work-desk')
+        .then(data => {
+          context.state.notesFromSearch = [];
+          data.forEach(list => {
+            context.state.notesFromSearch.push(list.data());
+        });
+      })
+    },
   },
   modules: {
   }

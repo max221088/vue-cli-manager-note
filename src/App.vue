@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
+    <MenuBar :showModal="showModal"/>
     <div class="wropp">
       <!-- <transition-group tag="div" name="list"> -->
       <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index.id" 
       :i="index" :data-id="item.id" 
-      @moveNote="move" @message="showMessageDel"
+       @message="showMessageDel"
       @sendIndex="startEditNote"/>
       <!-- </transition-group> -->
     </div>
@@ -56,15 +56,6 @@
         this.Element = data;
         this.$refs.messageAdd.sendMessage();
       },
-      filteredByCategory: function (data) {
-        this.notes = data;
-      },
-      filterByQuery: function (data) {
-        this.notes = data;
-      },
-      move: function (data) {
-        this.notes = data;
-      }
     },
     computed: {
       getNotesFromDB () {
