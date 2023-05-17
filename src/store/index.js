@@ -62,23 +62,20 @@ export default new Vuex.Store({
       .then(data => {
         context.state.notesDB = [];
         data.forEach(list => {
-          //console.log(list)
           context.state.notesDB.push(list.data());
       });
-      //console.log(context.state.notesDB);
     })
   },
   addNoteToDB (context, note) {
     return setDoc(doc(DB, 'work-desk', note.id), note);
   },
-  deleteNoteInDB (context, ID) {   // <-- новый метод
+  deleteNoteInDB (context, ID) {  
     return deleteDoc(doc(DB, "work-desk", ID))
   },
   fetchNoteById (context, ID) {
     return getDocFromDB ('work-desk', ID)
     .then(data => {
       context.state.EditNote = data.data();
-      console.log(context.state.EditNote)
       
       })
     }

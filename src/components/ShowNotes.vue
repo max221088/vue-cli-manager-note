@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="wropp"> -->
     <div class="note" v-bind:style="{ top: note.y + 'px', left: note.x + 'px'}" :data-key=i 
     @mousedown="startMove()" @mouseup="finishMove()" @mousemove="move()">
       <h5 class="title-note">{{ note.title }}</h5>
@@ -10,7 +9,6 @@
       </div>
       <p class="note-text">{{ note.content }}</p>
     </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -37,8 +35,7 @@
       },
       startMove () {
         this.index = this.$el.getAttribute('data-key');
-        //console.log(this.index);
-        this.notes = JSON.parse(localStorage.getItem('notes'));
+        this.notes = this.getNote;
         this.startCoords = ({
           x: event.pageX,
           y: event.pageY
@@ -51,7 +48,7 @@
       },
       finishMove () {
         this.action = false;
-        localStorage.setItem('notes', JSON.stringify(this.notes))
+        this.$store.dispatch('addNoteToDB', this.notes[this.index]);
       },
       move () {
         if (this.action) {
@@ -79,7 +76,8 @@
         let index = this.$el.getAttribute('data-key');
         let delName = this.getNote[index].title;
         this.$store.dispatch('deleteNoteInDB', ID);
-         this.$emit('message', delName);
+        this.$emit('message', delName);
+        this.$store.dispatch('fetchNote');
       },
       editNotes () {
         let index = this.$el.getAttribute('data-key');

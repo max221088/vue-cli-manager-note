@@ -67,18 +67,12 @@
       }
     },
     computed: {
-      // getNotesFromLS () {
-      //         return this.$store.getters['getNotesFromLS'];
-      //     },
       getNotesFromDB () {
           return this.$store.getters['getNotesFromDB'];
-      },
+      },  
     },
     created() {
-      //this.$store.dispatch('getFromLS');
       this.$store.dispatch('fetchNote');
-      // this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
-      //   ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
     } 
   }
 </script>
