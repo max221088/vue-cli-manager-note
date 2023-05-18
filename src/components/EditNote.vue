@@ -52,6 +52,7 @@
         this.note.content = this.con;
         this.note.category = this.cat;
         this.$store.dispatch('addNoteToDB', this.note);
+        this.$store.dispatch('fetchNoteFromSearch');
         this.closeModal();
       }
     },

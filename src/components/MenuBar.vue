@@ -7,6 +7,7 @@
       <option value="all">All</option>
       <option v-for="(items, index) in categories" :key="index">{{ items }}</option>
      </select>
+     <button class="login" @click="click()" >Login</button>
   </div>
 </template>
 
@@ -58,6 +59,9 @@
           }
         }.bind(this))
         this.$store.commit('filteredNotes', filtByQuery);
+      },
+      click () {
+        this.$store.dispatch('fetchNoteFromID', '1684349695599');
       }
     },
     computed: {

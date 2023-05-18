@@ -77,6 +77,7 @@
         this.$store.dispatch('deleteNoteInDB', ID);
         this.$emit('message', delName);
         this.$store.dispatch('fetchNote');
+        this.$store.dispatch('fetchNoteFromSearch');
       },
       editNotes () {
         let index = this.$el.getAttribute('data-key');

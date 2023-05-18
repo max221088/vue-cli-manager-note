@@ -7,7 +7,15 @@ Vue.use(Vuex)
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {  getDocs, collection, doc, setDoc, getDoc, getFirestore, deleteDoc} from "firebase/firestore";
+import {  
+  getDocs, collection, doc, setDoc, 
+  getDoc, 
+  getFirestore, deleteDoc} from "firebase/firestore";
+import {  
+  getAuth, 
+  //signOut, 
+  signInWithEmailAndPassword
+} from "firebase/auth";
 // Your web app's Firebase configuration
 const app = initializeApp({
   apiKey: "AIzaSyDEnAdzKeJezq6X1l4jqrzANqkVLFBvlNc",
@@ -20,6 +28,7 @@ const app = initializeApp({
 
 // Initialize Firebase
 const DB = getFirestore(app);
+const AUTH = getAuth(app);
 
 function getDocFromDB (deskID, colID) {
   return getDoc(doc(DB, deskID, colID));
@@ -41,7 +50,9 @@ export default new Vuex.Store({
     },
     notesDB: [],
     notesFromSearch: [],
-    EditNote: []
+    EditNote: [],
+    isLoggedIn: false,
+    UID: ''
   },
   getters: {
     getCategories (state) {
@@ -56,6 +67,9 @@ export default new Vuex.Store({
     getNotesFromSearch (state) {
       return state.notesFromSearch;
     },
+    getIsLoggedIn (state) {
+      return state.isLoggedIn;
+    }
   },
   mutations: {
     filteredNotes (state, filtNote) {
@@ -64,7 +78,7 @@ export default new Vuex.Store({
   },
   actions: {
    fetchNote(context) {
-    getNotesFromDB('work-desk')
+    getNotesFromDB(this.state.UID)
       .then(data => {
         context.state.notesDB = [];
         data.forEach(list => {
@@ -73,20 +87,21 @@ export default new Vuex.Store({
     })
   },
   addNoteToDB (context, note) {
-    return setDoc(doc(DB, 'work-desk', note.id), note);
+    return setDoc(doc(DB, context.state.UID, note.id), note);
   },
   deleteNoteInDB (context, ID) {  
-    return deleteDoc(doc(DB, "work-desk", ID))
+    return deleteDoc(doc(DB, context.state.UID, ID))
   },
   fetchNoteFromID (context, ID) {
-    return getDocFromDB ('work-desk', ID)
+    return getDocFromDB (context.state.UID, ID)
     .then(data => {
+      console.log(data.data());
+      context.state.EditNote = [];
       context.state.EditNote = data.data();
-      
       })
     },
     fetchNoteFromSearch(context) {
-      getNotesFromDB('work-desk')
+      getNotesFromDB(context.state.UID)
         .then(data => {
           context.state.notesFromSearch = [];
           data.forEach(list => {
@@ -94,6 +109,19 @@ export default new Vuex.Store({
         });
       })
     },
+    login(context, userCred) {
+      signInWithEmailAndPassword(AUTH, userCred.email, userCred.pass)
+      .then ((Credential)=>{
+        context.state.isLoggedIn = true;
+        context.state.UID = Credential.user.uid;
+        localStorage.setItem('userCred', JSON.stringify(userCred))
+        context.dispatch('fetchNote')
+        context.dispatch('fetchNoteFromSearch')
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    }
   },
   modules: {
   }

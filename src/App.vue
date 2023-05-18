@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <MenuBar :showModal="showModal"/>
-    <div class="wropp">
-      <!-- <transition-group tag="div" name="list"> -->
-      <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index.id" 
-      :i="index" :data-id="item.id" 
-       @message="showMessageDel"
-      @sendIndex="startEditNote"/>
-      <!-- </transition-group> -->
+    <LoginWindow ref="login" v-if="!getIsLoggedIn"/>
+      <template v-if="getIsLoggedIn">
+        <MenuBar :showModal="showModal"/>
+        <div class="wropp">
+          <!-- <transition-group tag="div" name="list"> -->
+          <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index.id" 
+          :i="index" :data-id="item.id" 
+          @message="showMessageDel"
+          @sendIndex="startEditNote"/>
+        <!-- </transition-group> -->
+        </div>
+        <AddBlock ref="modal" @message="showMessageAdd"/>
+        <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
+        <MessageInfo ref="messageAdd" :name="Element" :content="added"/>
+        <EditNote ref="edit" />
+      </template>
     </div>
-    <AddBlock ref="modal" @message="showMessageAdd"/>
-    <EditNote ref="edit" />
-    <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
-    <MessageInfo ref="messageAdd" :name="Element" :content="added"/>
-  </div>
 </template>
 
 <script>
@@ -22,6 +25,7 @@
   import ShowNotes from './components/ShowNotes.vue'
   import MessageInfo from './components/MessageInfo.vue'
   import EditNote from './components/EditNote.vue'
+  import LoginWindow from './components/LoginWindow.vue'
 
 
   export default {
@@ -31,7 +35,8 @@
       AddBlock,
       ShowNotes,
       MessageInfo,
-      EditNote
+      EditNote,
+      LoginWindow
     },
     data: function () {
       return {
@@ -60,11 +65,14 @@
     computed: {
       getNotesFromDB () {
           return this.$store.getters['getNotesFromDB'];
-      },  
+      }, 
+      getIsLoggedIn () {
+          return this.$store.getters['getIsLoggedIn'];
+      }, 
     },
-    created() {
-      this.$store.dispatch('fetchNote');
-    } 
+    // created() {
+    //   this.$store.dispatch('fetchNote');
+    // } 
   }
 </script>
 
