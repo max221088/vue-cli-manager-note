@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <MenuBar :showModal="showModal" @sendFiltCategoty="filteredByCategory" @sendFiltQuery="filterByQuery"/>
-    <!-- <transition-group tag="div" name="list"> -->
-    <div class="wropp">
-      <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index" 
-      :i="index" :data-id="item.id" 
-      @moveNote="move" @message="showMessageDel"
-      @sendIndex="startEditNote"/>
+    <LoginWindow ref="login" v-if="!getIsLoggedIn"/>
+      <template v-if="getIsLoggedIn">
+        <MenuBar :showModal="showModal"/>
+        <div class="wropp">
+          <!-- <transition-group tag="div" name="list"> -->
+          <ShowNotes v-for="(item, index) in getNotesFromDB" :note="item" :key="index.id" 
+          :i="index" :data-id="item.id" 
+          @message="showMessageDel"
+          @sendIndex="startEditNote"/>
+        <!-- </transition-group> -->
+        </div>
+        <AddBlock ref="modal" @message="showMessageAdd"/>
+        <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
+        <MessageInfo ref="messageAdd" :name="Element" :content="added"/>
+        <EditNote ref="edit" />
+      </template>
     </div>
-  <!-- </transition-group> -->
-    <AddBlock ref="modal" @sendNotes="getNote" @message="showMessageAdd"/>
-    <EditNote ref="edit" @sendNotes="getNote"/>
-    <MessageInfo ref="messageDel" :name="Element" :content="remove"/>
-    <MessageInfo ref="messageAdd" :name="Element" :content="added"/>
-  </div>
 </template>
 
 <script>
@@ -22,6 +25,7 @@
   import ShowNotes from './components/ShowNotes.vue'
   import MessageInfo from './components/MessageInfo.vue'
   import EditNote from './components/EditNote.vue'
+  import LoginWindow from './components/LoginWindow.vue'
 
 
   export default {
@@ -31,7 +35,8 @@
       AddBlock,
       ShowNotes,
       MessageInfo,
-      EditNote
+      EditNote,
+      LoginWindow
     },
     data: function () {
       return {
@@ -46,8 +51,7 @@
         this.$refs.modal.openModal();
       },
       startEditNote (data) {
-        this.editIndex = data;
-        this.$refs.edit.openModal();
+        this.$refs.edit.openModal(data);
       },
       showMessageDel (data) {
         this.Element = data;
@@ -57,34 +61,18 @@
         this.Element = data;
         this.$refs.messageAdd.sendMessage();
       },
-      filteredByCategory: function (data) {
-        this.notes = data;
-      },
-      filterByQuery: function (data) {
-        this.notes = data;
-      },
-      getNote: function () {
-        // this.notes = JSON.parse(localStorage.getItem('notes'));
-        this.notes = this.getNotesFromDB ();
-      },
-      move: function (data) {
-        this.notes = data;
-      }
     },
     computed: {
-      // getNotesFromLS () {
-      //         return this.$store.getters['getNotesFromLS'];
-      //     },
       getNotesFromDB () {
           return this.$store.getters['getNotesFromDB'];
-      },
+      }, 
+      getIsLoggedIn () {
+          return this.$store.getters['getIsLoggedIn'];
+      }, 
     },
-    created() {
-      //this.$store.dispatch('getFromLS');
-      this.$store.dispatch('fetchNote');
-      // this.notes = (JSON.parse(localStorage.getItem('notes')) != 0) 
-      //   ? JSON.parse(localStorage.getItem('notes')) : this.notes = [];
-    } 
+    // created() {
+    //   this.$store.dispatch('fetchNote');
+    // } 
   }
 </script>
 

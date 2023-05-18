@@ -49,7 +49,7 @@
       addNotes () {
         this.note.id = Date.now().toString();
         this.$store.dispatch('addNoteToDB', this.note);
-        this.$emit('sendNotes');
+        this.$store.dispatch('fetchNote');
         this.$emit('message', this.note.title);
         this.closeModal();
       }
@@ -57,7 +57,7 @@
     computed: {
       categories () {
         return this.$store.getters['getCategories'];
-      },
+      }
     }
   }
 </script>

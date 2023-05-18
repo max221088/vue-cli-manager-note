@@ -7,8 +7,15 @@ Vue.use(Vuex)
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {  getDocs, collection, doc, setDoc, getFirestore} from "firebase/firestore";
-// doc,getDoc,
+import {  
+  getDocs, collection, doc, setDoc, 
+  getDoc, 
+  getFirestore, deleteDoc} from "firebase/firestore";
+import {  
+  getAuth, 
+  //signOut, 
+  signInWithEmailAndPassword
+} from "firebase/auth";
 // Your web app's Firebase configuration
 const app = initializeApp({
   apiKey: "AIzaSyDEnAdzKeJezq6X1l4jqrzANqkVLFBvlNc",
@@ -21,10 +28,11 @@ const app = initializeApp({
 
 // Initialize Firebase
 const DB = getFirestore(app);
+const AUTH = getAuth(app);
 
-// function getDocFromDB (products, colID) {
-//   return getDoc(doc(DB, products, colID));
-// }
+function getDocFromDB (deskID, colID) {
+  return getDoc(doc(DB, deskID, colID));
+}
 
 function getNotesFromDB (colID) {
   return getDocs(collection(DB, colID))
@@ -40,40 +48,80 @@ export default new Vuex.Store({
       4: 'hobby',
       5: 'frends'
     },
-    notes: [],
-    notesDB: []
+    notesDB: [],
+    notesFromSearch: [],
+    EditNote: [],
+    isLoggedIn: false,
+    UID: ''
   },
   getters: {
     getCategories (state) {
       return state.categories;
     },
-    getNotesFromLS (state) {
-      return state.notes;
+    getEditNote (state) {
+      return state.EditNote;
     },
     getNotesFromDB (state) {
       return state.notesDB;
     },
+    getNotesFromSearch (state) {
+      return state.notesFromSearch;
+    },
+    getIsLoggedIn (state) {
+      return state.isLoggedIn;
+    }
   },
   mutations: {
+    filteredNotes (state, filtNote) {
+      state.notesDB = filtNote;
+    }
   },
   actions: {
-   getFromLS (state) {
-    state.notes = JSON.parse(localStorage.getItem('notes'));
-   },
    fetchNote(context) {
-    getNotesFromDB('work-desk')
+    getNotesFromDB(this.state.UID)
       .then(data => {
         context.state.notesDB = [];
         data.forEach(list => {
-          console.log(list)
           context.state.notesDB.push(list.data());
       });
-      console.log(context.state.notesDB);
     })
   },
   addNoteToDB (context, note) {
-    return setDoc(doc(DB, 'work-desk', note.id), note);
-  }
+    return setDoc(doc(DB, context.state.UID, note.id), note);
+  },
+  deleteNoteInDB (context, ID) {  
+    return deleteDoc(doc(DB, context.state.UID, ID))
+  },
+  fetchNoteFromID (context, ID) {
+    return getDocFromDB (context.state.UID, ID)
+    .then(data => {
+      console.log(data.data());
+      context.state.EditNote = [];
+      context.state.EditNote = data.data();
+      })
+    },
+    fetchNoteFromSearch(context) {
+      getNotesFromDB(context.state.UID)
+        .then(data => {
+          context.state.notesFromSearch = [];
+          data.forEach(list => {
+            context.state.notesFromSearch.push(list.data());
+        });
+      })
+    },
+    login(context, userCred) {
+      signInWithEmailAndPassword(AUTH, userCred.email, userCred.pass)
+      .then ((Credential)=>{
+        context.state.isLoggedIn = true;
+        context.state.UID = Credential.user.uid;
+        localStorage.setItem('userCred', JSON.stringify(userCred))
+        context.dispatch('fetchNote')
+        context.dispatch('fetchNoteFromSearch')
+      })
+      .catch((error)=>{
+        console.error(error)
+      })
+    }
   },
   modules: {
   }
