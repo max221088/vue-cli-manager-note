@@ -1,2 +1,7 @@
+Login: testuser@mail.com
+Pass: 123456
 
-анимирование при удалении и добавлении заметки
+Install:
+
+1 npm install
+2 vue serve
